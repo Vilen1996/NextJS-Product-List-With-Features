@@ -1,0 +1,136 @@
+.card {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  height: 150px;
+  transition: transform 0.3s ease;
+  position: relative;
+  background-color: aqua;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: "Lobster", cursive;
+  font-size: 0.8rem;
+  margin-top: 80px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  font-family: "Lobster", cursive;
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.filters button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #000;
+  transition: color 0.2s ease;
+  font-family: "Lobster", cursive;
+}
+
+.filters button:hover {
+  color: #ff0000;
+}
+
+.filters button.active {
+  color: #ff0000;
+  font-weight: bold;
+  text-decoration: underline 3px;
+}
+
+.icons {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: color 0.2s ease;
+}
+
+.unliked {
+  background-color: white;
+}
+
+.liked {
+  background-color: red;
+}
+
+.delete {
+  color: #e63946;
+}
+
+.searchInput {
+  border: none;
+  width: 200px;
+  background-color: #9d9b9b;
+  margin-top: 30px;
+  height: 20px;
+  border-radius: 10px;
+  padding: 5px;
+  font-family: "Lobster", cursive;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+}
+
+.pagination button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #000;
+  transition: color 0.2s ease;
+  font-family: "Lobster", cursive;
+}
+
+.pagination button:hover {
+  color: #ff0000;
+}
+
+.pagination button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.createProduct {
+  display: flex;
+  margin-top: 18px;
+  justify-content: center;
+}
