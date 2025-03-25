@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
+import ProductDetail from "./ProductDetail";
 import styles from "./page.module.css";
 
 interface Product {
@@ -9,7 +7,7 @@ interface Product {
   body: string;
 }
 
-// ✅ Generate static paths at build time
+// Generate static paths
 export async function generateStaticParams() {
   const res = await fetch(
     "https://67e3028097fc65f535386f3c.mockapi.io/api/products/products"
@@ -21,42 +19,32 @@ export async function generateStaticParams() {
   }));
 }
 
-// 🎯 Product detail component
-export default function ProductDetailPage() {
-  const { productId } = useParams();
-  const router = useRouter();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+// Fetch product data at build time
+export async function getProductData(productId: string): Promise<Product | null> {
+  try {
+    const res = await fetch(
+      `https://67e3028097fc65f535386f3c.mockapi.io/api/products/products/${productId}`
+    );
 
-  useEffect(() => {
-    if (productId) {
-      axios
-        .get<Product>(
-          `https://67e3028097fc65f535386f3c.mockapi.io/api/products/products/${productId}`
-        )
-        .then((res) => setProduct(res.data))
-        .catch(() => setError("Failed to fetch product details"))
-        .finally(() => setLoading(false));
-    }
-  }, [productId]);
+    if (!res.ok) return null;
 
-  const handleBackToProducts = () => {
-    router.push("/products");
-  };
+    return res.json();
+  } catch (error) {
+    return null;
+  }
+}
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className={styles.error}>{error}</p>;
+// Page component
+export default async function ProductPage({
+  params,
+}: {
+  params: { productId: string };
+}) {
+  const product = await getProductData(params.productId);
 
-  if (!product) return <p>Product not found</p>;
+  if (!product) {
+    return <p className={styles.error}>Product not found</p>;
+  }
 
-  return (
-    <div className={styles.productDetail}>
-      <h1>{product.title}</h1>
-      <p>{product.body}</p>
-      <button onClick={handleBackToProducts} className={styles.backButton}>
-        Back to Products
-      </button>
-    </div>
-  );
+  return <ProductDetail product={product} />;
 }
