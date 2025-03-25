@@ -10,6 +10,19 @@ interface Product {
   body: string;
 }
 
+// ✅ Generate static paths at build time
+export async function generateStaticParams() {
+  const res = await fetch(
+    "https://67e3028097fc65f535386f3c.mockapi.io/api/products/products"
+  );
+  const products = await res.json();
+
+  return products.map((product: { id: string }) => ({
+    productId: product.id,
+  }));
+}
+
+// 🎯 Product detail component
 export default function ProductDetailPage() {
   const { productId } = useParams();
   const router = useRouter();
